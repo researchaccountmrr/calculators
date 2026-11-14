@@ -1,0 +1,123 @@
+<!DOCTYPE html><html lang="es"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Calculadora de la escala de Zarit reducida</title><style>
+:root{--tinta:#15262E;--apagado:#56676E;--papel:#FFFFFF;--fondo:#EDF1F2;--linea:#C9D3D6;--linea-suave:#E3E9EB;--acento:#0B5C6B;--acento-fuerte:#07424D;--acento-suave:#DCEEF1;--aviso-fondo:#FFF1D6;--aviso-texto:#6B3F00;}
+*{box-sizing:border-box;}html{-webkit-text-size-adjust:100%;}
+body{margin:0;background:var(--fondo);color:var(--tinta);font:16px/1.5 "Segoe UI Variable Text","Segoe UI","SF Pro Text","Helvetica Neue",Arial,sans-serif;}
+.pagina{max-width:1120px;margin:0 auto;padding:28px 20px 110px;}
+.cabecera h1{margin:0 0 8px;font-size:clamp(1.9rem,4.2vw,2.7rem);line-height:1.08;font-weight:650;letter-spacing:-0.015em;}
+.intro{margin:0;max-width:64ch;color:var(--apagado);}
+.privacidad{margin:14px 0 0;padding:10px 14px;max-width:64ch;border-left:4px solid var(--acento);background:var(--papel);font-size:0.92rem;}
+.rejilla{display:grid;gap:28px;margin-top:26px;}
+@media (min-width:980px){.rejilla{grid-template-columns:minmax(0,1fr) 372px;align-items:start;}}
+.formulario{background:var(--papel);border:1px solid var(--linea);border-radius:10px;overflow:hidden;}
+.cabecera-tabla{display:none;grid-template-columns:176px minmax(0,1fr) 64px;gap:0 18px;padding:10px 20px;background:var(--acento-fuerte);color:#fff;font-size:0.88rem;font-weight:600;}
+.cabecera-tabla span:last-child{text-align:right;}
+@media (min-width:720px){.cabecera-tabla{display:grid;}}
+.dominio{padding:6px 20px 8px;border-top:1px solid var(--linea);display:grid;gap:0 18px;}
+.dominio:first-of-type{border-top:0;}
+@media (min-width:720px){.dominio{grid-template-columns:176px minmax(0,1fr);}}
+.dominio>h2{margin:16px 0 4px;font-size:1.05rem;font-weight:650;color:var(--acento);line-height:1.25;}
+@media (min-width:720px){.dominio>h2{margin-top:18px;}}
+.contenido-dominio{min-width:0;}
+.nota-dominio{margin:14px 0 4px;padding:10px 12px;background:var(--acento-suave);border-radius:6px;font-size:0.92rem;}
+.grupo>h3{margin:16px 0 0;font-size:0.92rem;font-weight:650;color:var(--apagado);}
+.pregunta{display:grid;grid-template-columns:minmax(0,1fr) 64px;gap:8px 18px;padding:14px 0;border-top:1px solid var(--linea-suave);}
+.grupo>h3+.pregunta,.grupo>.pregunta:first-child{border-top:0;}
+.enunciado{grid-column:1;margin:0;}
+.enunciado strong{display:block;font-weight:650;}
+.enunciado span{display:block;color:var(--tinta);}
+.puntos{grid-column:2;grid-row:1 / span 2;text-align:right;align-self:start;}
+.puntos small{display:block;font-size:0.74rem;color:var(--apagado);line-height:1.2;}
+.puntos output{display:block;font-size:1.4rem;font-weight:650;line-height:1.15;font-variant-numeric:tabular-nums;color:var(--acento);}
+.puntos output.vacio{color:var(--linea);}
+@media (min-width:720px){.puntos small{display:none;}}
+@media (max-width:719.98px){.puntos{grid-row:1;}}
+.opciones{grid-column:1;display:flex;flex-wrap:wrap;gap:8px;}
+.op{display:flex;align-items:center;gap:10px;min-height:42px;padding:8px 16px;border:1px solid var(--linea);border-radius:999px;background:var(--papel);cursor:pointer;line-height:1.3;}
+.op:hover{border-color:var(--acento);}
+.op input{width:18px;height:18px;margin:0;flex:none;accent-color:var(--acento);}
+.op.sel{border-color:var(--acento);background:var(--acento-suave);font-weight:600;}
+.op input:focus-visible{outline:3px solid var(--acento);outline-offset:2px;}
+.op:has(input:focus-visible){border-color:var(--acento);box-shadow:0 0 0 2px var(--acento-suave);}
+@media (max-width:719.98px){.opciones{grid-column:1 / -1;}}
+.resultado{background:var(--papel);border:1px solid var(--linea);border-radius:10px;padding:22px 22px 20px;}
+@media (min-width:980px){.resultado{position:sticky;top:16px;max-height:calc(100vh - 32px);overflow:auto;}}
+.resultado h2{margin:0;font-size:1rem;font-weight:650;color:var(--apagado);}
+.indice{margin:2px 0 0;font-size:clamp(3.6rem,9vw,4.8rem);line-height:1;font-weight:650;letter-spacing:-0.03em;font-variant-numeric:tabular-nums;color:var(--acento-fuerte);}
+.indice.vacio{color:var(--linea);}
+.desglose{margin:6px 0 0;color:var(--apagado);font-size:0.95rem;}
+.desglose strong{color:var(--tinta);font-variant-numeric:tabular-nums;}
+.escala{position:relative;margin:44px 0 0;}
+.tramos{display:flex;height:22px;border-radius:6px;overflow:hidden;}
+.tramos div{display:flex;align-items:center;justify-content:center;font-size:0.72rem;font-weight:600;color:#fff;}
+.t1{background:#4C9A8B;flex:10;}.t2{background:#B5483A;flex:19;}
+.ejes{display:flex;justify-content:space-between;font-size:0.76rem;color:var(--apagado);margin-top:4px;}
+.marcador{position:absolute;top:-8px;height:30px;width:0;margin-left:-1.5px;border-left:3px solid var(--acento-fuerte);transition:left 0.25s ease;}
+.marcador[hidden]{display:none;}
+.marcador span{position:absolute;top:-26px;left:1.5px;padding:2px 8px;border-radius:4px;background:var(--acento-fuerte);color:#fff;font-size:0.85rem;font-weight:650;font-variant-numeric:tabular-nums;white-space:nowrap;transform:translateX(-50%);}
+.nota-escala{margin:8px 0 0;font-size:0.86rem;color:var(--apagado);min-height:1.3em;}
+.respuesta-cuestionario{margin:20px 0 0;padding-top:16px;border-top:1px solid var(--linea-suave);}
+.respuesta-cuestionario h3{margin:0 0 8px;font-size:0.92rem;font-weight:650;}
+.estado{display:flex;align-items:center;gap:10px;margin:0 0 6px;padding:8px 12px;border:1px solid var(--linea);border-radius:8px;color:var(--apagado);}
+.estado::before{content:"";width:14px;height:14px;border-radius:50%;border:2px solid var(--linea);flex:none;}
+.estado.activo{border-color:var(--acento);background:var(--acento-suave);color:var(--tinta);font-weight:650;}
+.estado.activo::before{border-color:var(--acento);background:var(--acento);box-shadow:inset 0 0 0 3px var(--acento-suave);}
+.contestadas{margin:16px 0 0;font-size:0.92rem;}
+.contestadas strong{font-variant-numeric:tabular-nums;}
+.progreso{height:6px;margin-top:6px;border-radius:3px;background:var(--linea-suave);overflow:hidden;}
+.progreso div{height:100%;width:0;background:var(--acento);transition:width 0.25s ease;}
+.aviso{margin:12px 0 0;padding:10px 12px;border-radius:6px;background:var(--aviso-fondo);color:var(--aviso-texto);font-size:0.9rem;}
+.aviso[hidden]{display:none;}
+.boton{margin-top:18px;padding:10px 18px;min-height:44px;border:1px solid var(--acento);border-radius:8px;background:var(--papel);color:var(--acento);font:inherit;font-weight:650;cursor:pointer;}
+.boton:hover{background:var(--acento-suave);}
+.boton:focus-visible{outline:3px solid var(--acento);outline-offset:2px;}
+.pie{margin-top:28px;max-width:78ch;font-size:0.86rem;color:var(--apagado);}
+.pie p{margin:0 0 6px;}
+.barra{position:fixed;left:0;right:0;bottom:0;display:flex;justify-content:space-between;align-items:baseline;gap:16px;padding:10px 20px calc(10px + env(safe-area-inset-bottom));background:var(--acento-fuerte);color:#fff;font-variant-numeric:tabular-nums;}
+.barra b{font-size:1.5rem;font-weight:650;}.barra span{font-size:0.92rem;}
+@media (min-width:980px){.barra{display:none;}.pagina{padding-bottom:40px;}}
+@media (prefers-reduced-motion:reduce){.marcador,.progreso div{transition:none;}}
+@media print{.barra,.boton{display:none;}body{background:#fff;}.resultado{position:static;max-height:none;}}
+</style></head><body>
+<main class="pagina">
+<header class="cabecera"><h1>Escala de Zarit reducida</h1>
+<p class="intro">Marca la frecuencia con la que el cuidador principal se siente de cada manera. La puntuación se calcula al momento: es la suma de los 7 ítems, de 7 a 35 puntos.</p>
+<p class="privacidad">Esta página calcula en tu navegador. No guarda ni envía nada, y no tiene campos de texto: no hace falta escribir ningún dato del paciente ni del cuidador.</p></header>
+<div class="rejilla">
+<form class="formulario" id="form" onsubmit="return false">
+<div class="cabecera-tabla"><span>Dominio</span><span>Pregunta</span><span>Puntos</span></div>
+<section class="dominio"><h2>Sobrecarga del cuidador</h2><div class="contenido-dominio">
+<p class="nota-dominio">Opciones: 1 nunca, 2 casi nunca, 3 a veces, 4 frecuentemente, 5 casi siempre.</p>
+<div class="grupo" id="grupo"></div></div></section>
+</form>
+<aside class="resultado" aria-live="polite">
+<h2>Puntuación Zarit reducida</h2>
+<p class="indice vacio" id="tot">0</p>
+<p class="desglose">Total de <strong id="tot2">0</strong> puntos sobre 35 (mínimo 7)</p>
+<div class="escala"><div class="marcador" id="marca" hidden><span id="marcaTxt">0</span></div>
+<div class="tramos"><div class="t1">Sin sobrecarga</div><div class="t2">Sobrecarga intensa</div></div>
+<div class="ejes"><span>7</span><span>16 | 17</span><span>35</span></div></div>
+<p class="nota-escala" id="nota">Contesta las 7 preguntas para situar la puntuación.</p>
+<div class="respuesta-cuestionario"><h3>Interpretación (punto de corte 17)</h3>
+<p class="estado" id="e1">Sin sobrecarga (≤ 16)</p><p class="estado" id="e2">Sobrecarga intensa (≥ 17)</p></div>
+<p class="contestadas">Preguntas contestadas <strong id="cnt">0 de 7</strong></p><div class="progreso"><div id="prog"></div></div>
+<p class="aviso" id="aviso" hidden>Faltan preguntas por contestar: el resultado es provisional.</p>
+<button type="button" class="boton" id="reset">Borrar respuestas</button>
+</aside></div>
+<footer class="pie"><p>Versión reducida de 7 ítems de la escala de Zarit (ítems 2, 3, 6, 9, 10, 17 y 22 de la escala original), propuesta en cuidados paliativos. Punto de corte ≥ 17: sobrecarga intensa.</p><p>La puntuación es un apoyo para la valoración clínica y no sustituye al juicio del profesional.</p></footer>
+</main>
+<div class="barra"><b id="bTot">0</b><span id="bTxt">0 de 7 preguntas</span></div>
+<script>
+const Q=["¿Siente usted que, a causa del tiempo que gasta con su familiar/paciente, ya no tiene tiempo suficiente para usted mismo?", "¿Se siente estresada(o) al tener que cuidar a su familiar y tener además que atender otras responsabilidades? (familia, trabajo)", "¿Cree que la situación actual afecta a su relación con amigos u otros miembros de su familia de una forma negativa?", "¿Se siente agotada(o) cuando tiene que estar junto a su familiar/paciente?", "¿Siente usted que su salud se ha visto afectada por tener que cuidar a su familiar/paciente?", "¿Siente que ha perdido el control sobre su vida desde que la enfermedad de su familiar se manifestó?", "En general, ¿se siente muy sobrecargado al tener que cuidar de su familiar/paciente?"],O=["Nunca","Casi nunca","A veces","Frecuentemente","Casi siempre"];
+const g=document.getElementById('grupo'),$=id=>document.getElementById(id);
+Q.forEach((q,i)=>g.insertAdjacentHTML('beforeend',`<div class="pregunta"><p class="enunciado"><strong>Pregunta ${i+1}</strong><span>${q}</span></p><div class="puntos"><small>Puntos</small><output class="vacio" id="p${i}">–</output></div><div class="opciones" role="radiogroup" aria-label="Pregunta ${i+1}">${O.map((o,k)=>`<label class="op"><input type="radio" name="q${i}" value="${k+1}">${o} (${k+1})</label>`).join('')}</div></div>`));
+function calc(){let t=0,c=0;Q.forEach((_,i)=>{const r=document.querySelector(`input[name=q${i}]:checked`),o=$('p'+i);o.textContent=r?r.value:'–';o.className=r?'':'vacio';if(r){t+=+r.value;c++}});
+document.querySelectorAll('.op').forEach(l=>l.classList.toggle('sel',l.querySelector('input').checked));
+const ok=c===7;$('tot').textContent=t;$('tot').className='indice'+(c?'':' vacio');$('tot2').textContent=t;
+$('cnt').textContent=c+' de 7';$('prog').style.width=(c/7*100)+'%';$('aviso').hidden=!(c>0&&!ok);
+$('bTot').textContent=t;$('bTxt').textContent=c+' de 7 preguntas';
+$('marca').hidden=!ok;if(ok){$('marca').style.left=((t-7)/28*100)+'%';$('marcaTxt').textContent=t}
+$('e1').classList.toggle('activo',ok&&t<=16);$('e2').classList.toggle('activo',ok&&t>=17);
+$('nota').textContent=ok?(t>=17?'Puntuación compatible con sobrecarga intensa.':'Puntuación sin sobrecarga.'):'Contesta las 7 preguntas para situar la puntuación.'}
+$('form').addEventListener('change',calc);
+$('reset').onclick=()=>{$('form').reset();calc()};calc();
+</script></body></html>
